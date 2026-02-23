@@ -62,13 +62,13 @@ const Navbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
 
         <div className="flex items-center space-x-4">
           <div className="hidden sm:flex items-center space-x-4">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="p-2 hover:bg-white/10 rounded-full transition-all">
+            <a href="https://github.com/diego-reb" target="_blank" rel="noreferrer" className="p-2 hover:bg-white/10 rounded-full transition-all">
               <Github size={18} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="p-2 hover:bg-white/10 rounded-full transition-all">
+            <a href="https://www.linkedin.com/in/diego-zaid-garcia-rebollo-9065192a6/" target="_blank" rel="noreferrer" className="p-2 hover:bg-white/10 rounded-full transition-all">
               <Linkedin size={18} />
             </a>
-            <a href="#" className="p-2 hover:bg-white/10 rounded-full transition-all">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dzgarcia10@gmail.com" className="p-2 hover:bg-white/10 rounded-full transition-all">
               <Globe size={18} />
             </a>
           </div>
@@ -281,7 +281,7 @@ export default function App() {
                     EN
                   </div>
                 </div>
-                <span className="text-sm font-medium text-white/60">Bilingüe</span>
+                <span className="text-sm font-medium text-white/60">Inglés B2 – Comprensión alta, conversación en desarrollo</span>
               </div>
             </div>
 
@@ -402,10 +402,16 @@ export default function App() {
           </SectionTitle>
 
           <div className="space-y-4">
+             <TimelineItem 
+              title="Servicio Social"
+              company="Secretaría de Educación Pública (SEP)"
+              period="2025 - presente"
+              description="Integracion de agentes de IA en los procesos para automatizar tareas administrativas de los docentes."
+            />
             <TimelineItem 
               title="Proyecto Ubika"
               company="Desarrollo Independiente"
-              period="2024 - Presente"
+              period="2025 - Presente"
               description="Sistema integral de logística y seguimiento en tiempo real."
               details={[
                 "Seguimiento de operadores mediante geolocalización.",
@@ -434,12 +440,7 @@ export default function App() {
                 "Integración de sistemas de seguridad (Captcha)."
               ]}
             />
-            <TimelineItem 
-              title="Servicio Social"
-              company="Secretaría de Educación Pública (SEP)"
-              period="2021 - 2022"
-              description="Apoyo técnico y desarrollo de herramientas internas para la gestión educativa."
-            />
+           
           </div>
         </div>
       </section>
@@ -552,9 +553,9 @@ export default function App() {
           </div>
           
           <div className="flex items-center space-x-6">
-            <a href="#" className="text-white/40 hover:text-white transition-colors"><Github size={20} /></a>
-            <a href="#" className="text-white/40 hover:text-white transition-colors"><Linkedin size={20} /></a>
-            <a href="#" className="text-white/40 hover:text-white transition-colors"><Mail size={20} /></a>
+            <a href="https://github.com/diego-reb" className="text-white/40 hover:text-white transition-colors"><Github size={20} /></a>
+            <a href="https://www.linkedin.com/in/diego-zaid-garcia-rebollo-9065192a6/" className="text-white/40 hover:text-white transition-colors"><Linkedin size={20} /></a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dzgarcia10@gmail.com" className="text-white/40 hover:text-white transition-colors"><Mail size={20} /></a>
           </div>
         </div>
       </footer>
