@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space+Grotesk", sans-serif;
+  
+  --color-apple-black: #0A0A0A;
+  --color-apple-gray: #1D1D1F;
+  --color-apple-silver: #F5F5F7;
+  --color-accent-blue: #0071E3;
+}
+
+@layer base {
+  body {
+    @apply bg-apple-black text-apple-silver font-sans antialiased selection:bg-accent-blue/30;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-2xl border border-white/5;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50;
+  }
+}
