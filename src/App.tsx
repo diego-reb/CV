@@ -311,7 +311,7 @@ export default function App() {
             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full p-2 glass-dark overflow-hidden group">
               <div className="w-full h-full rounded-full overflow-hidden relative">
                 <img 
-                  src="https://picsum.photos/seed/diego/800/800" 
+                  src="/public/imagenes/foto.jpeg" 
                   alt="Diego Zaid" 
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                   referrerPolicy="no-referrer"
