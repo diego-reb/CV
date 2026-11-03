@@ -14,7 +14,6 @@ import {
   Database, 
   ShieldCheck, 
   Cpu, 
-  Layout, 
   Terminal,
   Menu,
   X,
@@ -49,7 +48,7 @@ const Navbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
         </motion.div>
 
         <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-white/70">
-          {['Inicio', 'Aptitudes', 'Experiencia', 'Formación', 'Contacto'].map((item) => (
+          {['Inicio', 'Habilidades', 'Experiencia', 'Proyectos', 'Formación', 'Contacto'].map((item) => (
             <a 
               key={item} 
               href={`#${item.toLowerCase()}`} 
@@ -109,7 +108,7 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) 
               </button>
             </div>
             <div className="flex flex-col space-y-6 text-lg font-medium">
-              {['Inicio', 'Aptitudes', 'Experiencia', 'Formación', 'Contacto'].map((item) => (
+              {['Inicio', 'Habilidades', 'Experiencia', 'Proyectos', 'Formación', 'Contacto'].map((item) => (
                 <a 
                   key={item} 
                   href={`#${item.toLowerCase()}`} 
@@ -157,7 +156,7 @@ const SectionTitle = ({ children, subtitle }: { children: React.ReactNode; subti
   </div>
 );
 
-const SkillCard = ({ title, icon: Icon, description, level }: { title: string; icon: any; description: string; level: number }) => (
+const SkillGroup = ({ title, icon: Icon, skills }: { title: string; icon: any; skills: string[] }) => (
   <motion.div 
     whileHover={{ y: -5 }}
     className="glass p-8 rounded-3xl group transition-all duration-500"
@@ -165,27 +164,48 @@ const SkillCard = ({ title, icon: Icon, description, level }: { title: string; i
     <div className="w-12 h-12 rounded-2xl bg-accent-blue/10 flex items-center justify-center mb-6 text-accent-blue group-hover:scale-110 transition-transform duration-500">
       <Icon size={24} />
     </div>
-    <h3 className="text-xl font-bold mb-3">{title}</h3>
-    <p className="text-white/50 text-sm mb-6 leading-relaxed">{description}</p>
-    <div className="space-y-2">
-      <div className="flex justify-between text-xs font-medium text-white/40 uppercase tracking-wider">
-        <span>Dominio</span>
-        <span>{level}%</span>
-      </div>
-      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-        <motion.div 
-          initial={{ width: 0 }}
-          whileInView={{ width: `${level}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="h-full bg-accent-blue"
-        />
-      </div>
+    <h3 className="text-lg font-bold mb-4">{title}</h3>
+    <ul className="space-y-2">
+      {skills.map((skill) => (
+        <li key={skill} className="flex items-start text-sm text-white/50 leading-relaxed">
+          <ChevronRight size={14} className="mt-1 mr-2 text-accent-blue/70 flex-shrink-0" />
+          {skill}
+        </li>
+      ))}
+    </ul>
+  </motion.div>
+);
+
+const ProjectCard = ({ name, context, bullets, stack }: { name: string; context: string; bullets: string[]; stack: string[] }) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    className="glass p-8 rounded-3xl flex flex-col"
+  >
+    <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-4">
+      <h3 className="text-xl font-bold text-white">{name}</h3>
+      <span className="text-xs font-bold uppercase tracking-widest text-accent-blue">{context}</span>
+    </div>
+    <ul className="space-y-2 mb-6 flex-1">
+      {bullets.map((bullet, idx) => (
+        <li key={idx} className="flex items-start text-sm text-white/50 leading-relaxed">
+          <ChevronRight size={14} className="mt-1 mr-2 text-accent-blue flex-shrink-0" />
+          {bullet}
+        </li>
+      ))}
+    </ul>
+    <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+      {stack.map((tech) => (
+        <span key={tech} className="text-[11px] font-medium px-3 py-1 rounded-full bg-white/5 text-white/60">
+          {tech}
+        </span>
+      ))}
     </div>
   </motion.div>
 );
 
-const TimelineItem = ({ title, company, period, description, details }: { title: string; company: string; period: string; description: string; details?: string[] }) => (
+const TimelineItem = ({ title, company, period, description, details, stack }: { title: string; company: string; period: string; description: string; details?: string[]; stack?: string[] }) => (
   <div className="relative pl-8 pb-12 last:pb-0 group">
     <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10 group-last:bg-transparent">
       <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-accent-blue shadow-[0_0_15px_rgba(0,113,227,0.5)]" />
@@ -215,6 +235,15 @@ const TimelineItem = ({ title, company, period, description, details }: { title:
             </li>
           ))}
         </ul>
+      )}
+      {stack && (
+        <div className="flex flex-wrap gap-2 mt-5 pt-4 border-t border-white/10">
+          {stack.map((tech) => (
+            <span key={tech} className="text-[11px] font-medium px-3 py-1 rounded-full bg-white/5 text-white/60">
+              {tech}
+            </span>
+          ))}
+        </div>
       )}
     </motion.div>
   </div>
@@ -260,8 +289,10 @@ export default function App() {
               <span className="text-gradient">Diego Zaid</span>
             </h1>
             <p className="text-xl text-white/50 mb-10 max-w-lg leading-relaxed">
-              Especialista en desarrollo de software, bases de datos y seguridad. 
-              Enfocado en crear soluciones tecnológicas elegantes y eficientes.
+              Ingeniero en Sistemas Computacionales en proceso de titulación (diciembre 2026), con experiencia
+              en desarrollo backend con Python/Django, Flask y PHP, y en mantenimiento de sistemas empresariales
+              en .NET y SQL Server. Construyo backends y bases de datos claras, seguras y mantenibles, y busco mi
+              primera posición como Desarrollador Backend Junior o QA Automation Junior.
             </p>
             
             <div className="flex flex-wrap gap-4">
@@ -311,7 +342,7 @@ export default function App() {
             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full p-2 glass-dark overflow-hidden group">
               <div className="w-full h-full rounded-full overflow-hidden relative">
                 <img 
-                  src="/public/imagenes/foto.jpeg" 
+                  src="/imagenes/foto.jpeg" 
                   alt="Diego Zaid" 
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                   referrerPolicy="no-referrer"
@@ -346,49 +377,33 @@ export default function App() {
         </div>
       </section>
 
-      {/* Aptitudes Section */}
-      <section id="aptitudes" className="py-24 px-6 bg-apple-black/50">
+      {/* Habilidades Section */}
+      <section id="habilidades" className="py-24 px-6 bg-apple-black/50">
         <div className="max-w-7xl mx-auto">
-          <SectionTitle subtitle="Combinando lógica técnica con diseño moderno para crear experiencias digitales excepcionales.">
-            Aptitudes y <span className="text-accent-blue">Capacidades</span>
+          <SectionTitle subtitle="Tecnologías que uso en producción o en proyectos académicos, separadas por área.">
+            Habilidades <span className="text-accent-blue">Técnicas</span>
           </SectionTitle>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <SkillCard 
-              title="Backend Development" 
-              icon={Cpu} 
-              description="Dominio de Python, PHP y .NET para construir arquitecturas robustas y escalables."
-              level={92}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <SkillGroup 
+              title="Lenguajes" 
+              icon={Code2} 
+              skills={['Python', 'PHP', 'C# (.NET)', 'SQL', 'JavaScript', 'HTML5 / CSS3']}
             />
-            <SkillCard 
+            <SkillGroup 
+              title="Frameworks" 
+              icon={Cpu} 
+              skills={['Django', 'Flask', '.NET', 'Diseño de APIs y control de roles']}
+            />
+            <SkillGroup 
               title="Bases de Datos" 
               icon={Database} 
-              description="Diseño, implementación y optimización de bases de datos relacionales complejas."
-              level={95}
+              skills={['SQL Server', 'Modelado relacional (esquemas, tablas, relaciones)', 'Consultas y migraciones de datos', 'Exportación e integración de datos (Excel)']}
             />
-            <SkillCard 
-              title="Frontend Moderno" 
-              icon={Layout} 
-              description="Creación de interfaces elegantes y responsivas con las últimas tecnologías web."
-              level={88}
-            />
-            <SkillCard 
-              title="Ciberseguridad" 
-              icon={ShieldCheck} 
-              description="Implementación de medidas de seguridad avanzadas como Captcha y validaciones críticas."
-              level={90}
-            />
-            <SkillCard 
-              title="Optimización de Código" 
+            <SkillGroup 
+              title="Herramientas" 
               icon={Terminal} 
-              description="Corrección, refactorización y mejora de rendimiento en proyectos legados y nuevos."
-              level={94}
-            />
-            <SkillCard 
-              title="Mantenimiento" 
-              icon={Code2} 
-              description="Mantenimiento preventivo y correctivo de sistemas críticos empresariales."
-              level={96}
+              skills={['Git / GitHub (ramas, commits, control de versiones)', 'Docker (contenedores, nivel básico)', 'Terminal (Bash / Linux)', 'Integración de APIs de pago (Mercado Pago)']}
             />
           </div>
         </div>
@@ -402,45 +417,73 @@ export default function App() {
           </SectionTitle>
 
           <div className="space-y-4">
-             <TimelineItem 
-              title="Servicio Social"
-              company="Secretaría de Educación Pública (SEP)"
-              period="2025 - presente"
-              description="Integracion de agentes de IA en los procesos para automatizar tareas administrativas de los docentes."
-            />
             <TimelineItem 
-              title="Proyecto Ubika"
-              company="Desarrollo Independiente"
+              title="Desarrollador Backend (Servicio Social)"
+              company="Secretaría de Educación Pública (SEP) — Proyecto EscalafónIA"
               period="2025 - Presente"
-              description="Sistema integral de logística y seguimiento en tiempo real."
+              description="Plataforma de apoyo a docentes construida con Python/Django y microservicios, con módulos de generación de cursos y evaluación asistidos por IA."
               details={[
-                "Seguimiento de operadores mediante geolocalización.",
-                "Ubicación en tiempo real con precisión avanzada.",
-                "Sistema de prevención de omisión de citas mediante alertas inteligentes."
+                "Diseñé el modelo de datos y la lógica de permisos por rol (docente, evaluador, administrador y generador de cursos), evitando accesos cruzados entre perfiles.",
+                "Integré servicios de IA para la generación de cursos y el apoyo a la evaluación docente, reduciendo el trabajo administrativo que antes se hacía de forma manual.",
+                "Desarrollé los módulos sobre una arquitectura de microservicios en Django, separando responsabilidades para poder modificar un componente sin afectar al resto."
               ]}
+              stack={['Python', 'Django', 'Microservicios', 'SQL', 'Git']}
             />
             <TimelineItem 
-              title="Proyecto Latina"
-              company="Portal Gasolinera PEMEX"
-              period="2023 - 2024"
-              description="Optimización y mantenimiento del portal de gestión de gasolineras."
+              title="Desarrollador Full Stack (Freelance)"
+              company="Verquet — Portales Chamuco, Latina y Mac"
+              period="2022 - 2024"
+              description="Desarrollo y mantenimiento de portales web empresariales en .NET y SQL Server: funcionalidad nueva, reconstrucción de base de datos y endurecimiento de seguridad."
               details={[
-                "Corrección integral de código y mejora de rendimiento.",
-                "Implementación de módulos de seguridad y validación de datos."
+                "Revista del Chamuco: implementé el login y 10 vistas en .NET, y reconstruí la base de datos completa en SQL Server (esquema, tablas y relaciones), dejando la estructura lista para altas y consultas sin intervención manual.",
+                "Portal Latina (gasolinera PEMEX): añadí rate limiting al inicio de sesión para mitigar ataques de fuerza bruta, audité dependencias en busca de librerías con vulnerabilidades conocidas y reescribí los mensajes de error para no filtrar información del sistema.",
+                "Portal Mac: actualicé 6 vistas en .NET, rediseñé la jerarquía de botones y amplié tablas existentes con nuevos campos, incluyendo la exportación de esos datos a Excel para el área administrativa.",
+                "Empleé asistentes de IA como apoyo en la generación de casos de prueba y refactorización, revisando y validando manualmente cada cambio antes de integrarlo al repositorio."
               ]}
+              stack={['C# (.NET)', 'SQL Server', 'Seguridad web', 'Git']}
             />
-            <TimelineItem 
-              title="Revista del Chamuco"
-              company="Portal Digital"
-              period="2022 - 2023"
-              description="Desarrollo full-stack para uno de los portales culturales más importantes."
-              details={[
-                "Desarrollo completo de la base de datos del portal.",
-                "Implementación del frontend moderno y responsivo.",
-                "Integración de sistemas de seguridad (Captcha)."
+          </div>
+        </div>
+      </section>
+
+      {/* Proyectos Section */}
+      <section id="proyectos" className="py-24 px-6 bg-apple-black/50">
+        <div className="max-w-7xl mx-auto">
+          <SectionTitle subtitle="Proyectos propios y académicos donde apliqué el stack de principio a fin: backend, base de datos y reglas de negocio.">
+            Proyectos <span className="text-accent-blue">Destacados</span>
+          </SectionTitle>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <ProjectCard
+              name="Luz Violeta"
+              context="Proyecto académico · Python / Flask"
+              bullets={[
+                "Desarrollé en Python/Flask una plataforma informativa para mujeres con chatbot guía, directorio de instituciones de ayuda y botón de pánico.",
+                "Implementé el botón de pánico para capturar la ubicación del usuario y notificar a su contacto de emergencia, integrando la geolocalización con el flujo de alerta.",
+                "Separé la lógica del chatbot del contenido del directorio, de modo que el equipo puede actualizar la información sin modificar el código del backend."
               ]}
+              stack={['Python', 'Flask', 'HTML/CSS', 'Geolocalización', 'Git']}
             />
-           
+            <ProjectCard
+              name="Cenit"
+              context="E-commerce · PHP"
+              bullets={[
+                "Construí una tienda en línea de productos de limpieza con cuatro roles (mayorista, minorista, repartidor y administrador), cada uno con su propio flujo, precios y permisos.",
+                "Integré la pasarela de pagos de Mercado Pago y automaticé el cálculo de precios y disponibilidad según el tipo de cliente, sustituyendo la cotización manual.",
+                "Diseñé el modelo de datos de productos, pedidos y usuarios para sostener los distintos roles sobre una misma base relacional."
+              ]}
+              stack={['PHP', 'SQL', 'Mercado Pago API', 'Git']}
+            />
+            <ProjectCard
+              name="Ubika"
+              context="Cliente real · PHP"
+              bullets={[
+                "Desarrollé en PHP un sistema de gestión de ubicaciones para una empresa de servicios, donde cada visita asignada exige evidencia fotográfica y coordenadas GPS al completarse.",
+                "Implementé el flujo de asignación, captura de evidencia y validación de asistencia contra el domicilio del cliente, sustituyendo el registro manual por comprobantes verificables.",
+                "Modelé usuarios, clientes y visitas en una base relacional para que el seguimiento y los reportes de asistencia se consulten en un solo lugar."
+              ]}
+              stack={['PHP', 'SQL', 'GPS', 'Git']}
+            />
           </div>
         </div>
       </section>
@@ -459,8 +502,8 @@ export default function App() {
               </h3>
               <EducationCard 
                 title="Ingeniería en Sistemas Computacionales"
-                institution="Educación Superior"
-                period="En curso"
+                institution="Educación Superior · En proceso de titulación (Diciembre 2026)"
+                period="Último semestre"
                 icon={Briefcase}
               />
               <EducationCard 

@@ -6,6 +6,9 @@ import {defineConfig, loadEnv} from 'vite';
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
   return {
+    // GitHub Pages sirve el sitio en https://diego-reb.github.io/CV/
+    // En desarrollo se mantiene en la raíz para no cambiar las URLs locales.
+    base: mode === 'production' ? '/CV/' : '/',
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
