@@ -9,7 +9,6 @@ import {
   Github, 
   Linkedin, 
   Mail, 
-  ExternalLink, 
   Code2, 
   Database, 
   ShieldCheck, 
@@ -18,7 +17,6 @@ import {
   Menu,
   X,
   ChevronRight,
-  Award,
   BookOpen,
   Briefcase,
   User,
@@ -491,51 +489,26 @@ export default function App() {
       {/* Formación Section */}
       <section id="formación" className="py-24 px-6 bg-apple-black/50">
         <div className="max-w-7xl mx-auto">
-          <SectionTitle subtitle="Compromiso continuo con el aprendizaje y la excelencia académica.">
-            Formación y <span className="text-accent-blue">Certificaciones</span>
+          <SectionTitle subtitle="Formación académica en ingeniería de software, con titulación prevista para diciembre de 2026.">
+            Formación <span className="text-accent-blue">Académica</span>
           </SectionTitle>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <h3 className="text-2xl font-display font-bold mb-8 flex items-center">
-                <BookOpen className="mr-3 text-accent-blue" /> Académica
-              </h3>
-              <EducationCard 
-                title="Ingeniería en Sistemas Computacionales"
-                institution="Educación Superior · En proceso de titulación (Diciembre 2026)"
-                period="Último semestre"
-                icon={Briefcase}
-              />
-              <EducationCard 
-                title="Técnico en Informática y Programación"
-                institution="Educación Media Superior"
-                period="Concluido"
-                icon={Code2}
-              />
-            </div>
-
-            <div className="space-y-8">
-              <h3 className="text-2xl font-display font-bold mb-8 flex items-center">
-                <Award className="mr-3 text-accent-blue" /> Certificaciones
-              </h3>
-              <div className="grid grid-cols-1 gap-4">
-                {['Microsoft Certified Professional', 'Cisco Networking Academy', 'Oracle Database Specialist', 'Azure Fundamentals'].map((cert, idx) => (
-                  <motion.div 
-                    key={idx}
-                    whileHover={{ x: 10 }}
-                    className="glass p-6 rounded-2xl flex items-center justify-between group"
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 rounded-xl bg-accent-blue/10 flex items-center justify-center text-accent-blue">
-                        <Award size={20} />
-                      </div>
-                      <span className="font-medium">{cert}</span>
-                    </div>
-                    <ExternalLink size={16} className="text-white/20 group-hover:text-white transition-colors" />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+          <div className="max-w-2xl mx-auto space-y-8">
+            <h3 className="text-2xl font-display font-bold mb-8 flex items-center">
+              <BookOpen className="mr-3 text-accent-blue" /> Académica
+            </h3>
+            <EducationCard 
+              title="Ingeniería en Sistemas Computacionales"
+              institution="Educación Superior · En proceso de titulación (Diciembre 2026)"
+              period="Último semestre"
+              icon={Briefcase}
+            />
+            <EducationCard 
+              title="Técnico en Informática y Programación"
+              institution="Educación Media Superior"
+              period="Concluido"
+              icon={Code2}
+            />
           </div>
         </div>
       </section>
